@@ -10,7 +10,7 @@ class ApiNoteTest extends TestCase
 {
 	use DatabaseTransactions;
 
-    protected $note = 'This is a note';
+    public  $note = 'This is a note';
 
     public function test_list_notes()
     {
@@ -28,7 +28,7 @@ class ApiNoteTest extends TestCase
     {
         $category = factory(Category::class)->create();
         $this->post('api/v1/notes',[
-            'note' => $this->$note,
+            'note' => $this->note,
             'category_id' => "$category->id",
             ]);
 
@@ -39,7 +39,25 @@ class ApiNoteTest extends TestCase
 
         $this->seeJsonEquals([
             'success' => true,
-            'note_id' => Note::first(),
+            'note' => Note::first()->toArray(),
+            ]);
+    }
+
+    public function test_validation_when_creating_a_note()
+    {
+        $this->post('api/v1/notes',[
+            'note' => '',
+            'category_id' => '100',
+            ]);
+        $this->dontSeeInDatabase('notes',[
+            'note' => '',
+            ]);
+        $this->seeJsonEquals([
+            'success' => false,
+            'errors' => [
+                'Then note attribute is required',
+                'The category is invalid'
+            ],
             ]);
     }
 } 
