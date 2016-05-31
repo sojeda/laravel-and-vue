@@ -24,7 +24,7 @@ class ApiNoteTest extends TestCase
         ->seeJsonEquals($notes->toArray());
     }
 
-    public function test_can_create_A_note()
+    public function test_can_create_a_note()
     {
         $category = factory(Category::class)->create();
         $this->post('api/v1/notes',[
@@ -39,7 +39,7 @@ class ApiNoteTest extends TestCase
 
         $this->seeJsonEquals([
             'success' => true,
-            'note_id' => Note::first()->id,
+            'note_id' => Note::first(),
             ]);
     }
 } 
