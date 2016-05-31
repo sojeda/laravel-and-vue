@@ -1,5 +1,7 @@
 <?php
 
+use App\User;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -14,3 +16,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/name', function () {
+    return User::first()->name;
+});
+
+
+

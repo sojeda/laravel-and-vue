@@ -58,10 +58,10 @@ return [
             'strict'    => false,
         ],
 
-        'mysql_tests' => [
+        'mysql_test' => [
             'driver'    => 'mysql',
             'host'      => env('DB_HOST', 'localhost'),
-            'database'  => env('DB_DATABASE', 'forge').'_tests',
+            'database'  => env('DB_DATABASE', 'forge').'_test',
             'username'  => env('DB_USERNAME', 'forge'),
             'password'  => env('DB_PASSWORD', ''),
             'charset'   => 'utf8',
