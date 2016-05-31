@@ -27,7 +27,13 @@ class NoteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->only('note','category_id');
+        $note = Note::create($data);
+        return  [
+            'success' => true,
+            'note' => $note->toArray(),
+        ];
+
     }
 
     /**
