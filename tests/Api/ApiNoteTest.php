@@ -16,7 +16,7 @@ class ApiNoteTest extends TestCase
     {
     	$category = factory(Category::class)->create();
     	$notes = factory(Note::class)->times(2)->create([
-    		'category_id' => "$category->id"
+    		'category_id' => $category->id
     		]);
 
         $this->get('api/v1/notes')
@@ -29,12 +29,12 @@ class ApiNoteTest extends TestCase
         $category = factory(Category::class)->create();
         $this->post('api/v1/notes',[
             'note' => $this->note,
-            'category_id' => "$category->id",
+            'category_id' => $category->id,
             ]);
 
         $this->seeInDatabase('notes',[
             'note' => $this->note,
-            'category_id' => "$category->id",
+            'category_id' => $category->id,
             ]);
 
         $this->seeJsonEquals([

@@ -9,4 +9,8 @@ class Note extends Model
     protected $visible = ['id','note','category_id'];
 
     protected $fillable = ['note','category_id'];
+
+    protected $casts = [
+   		'category_id' => 'integer'
+	];
 }
