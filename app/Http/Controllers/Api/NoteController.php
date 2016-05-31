@@ -28,10 +28,12 @@ class NoteController extends Controller
     public function store(Request $request)
     {
         $data = $request->only('note','category_id');
+
         $this->validate($request, [
             'note' => 'required',
-            'category_id' => 'exist:categories,id'
+            'category_id' => 'exists:categories,id'
             ]);
+ 
         $note = Note::create($data);
         return  [
             'success' => true,
