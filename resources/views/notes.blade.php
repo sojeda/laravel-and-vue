@@ -66,7 +66,12 @@
                         <li v-for="error in errors">{{ error }}</li>
                   </ul>
                 </td>
-                <td><a href="#" @click="update()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></td>
+                <td>
+                  <a href="#" @click.prevent="update()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+                  <a href="#" @click.prevent="cancel()">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </a>
+                </td>
             </template>
         </tr>
       </template>

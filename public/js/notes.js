@@ -30,10 +30,12 @@ Vue.component('note-row', {
         edit: function() {
             this.editing = true;
         },
+        cancel: function() {
+            this.editing = false;
+        },
         update: function() {
             this.errors = [];
             var vm = this;
-           
             $.ajax({
                 url: '/api/v1/notes/' + vm.note.id,
                 type: 'PUT',
@@ -41,14 +43,12 @@ Vue.component('note-row', {
                 data: vm.note,
             }).done(function(data) {
                 console.log("success");
-                vm.$parent.notes.$set(this.$parent.notes.indexOf(vm.note),data.note);
+                vm.$parent.notes.$set(vm.$parent.notes.indexOf(vm.note), data.note);
                 this.editing = false;
             }).fail(function(jqXHR) {
                 console.log("error");
                 vm.errors = jqXHR.responseJSON.errors;
             });
-
-             
         }
     }
 });
