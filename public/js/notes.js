@@ -42,12 +42,13 @@ Vue.component('note-row', {
             }).done(function(data) {
                 console.log("success");
                 vm.$parent.notes.$set(this.$parent.notes.indexOf(vm.note),data.note);
+                this.editing = false;
             }).fail(function(jqXHR) {
                 console.log("error");
                 vm.errors = jqXHR.responseJSON.errors;
             });
 
-             this.editing = false;
+             
         }
     }
 });

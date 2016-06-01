@@ -63,7 +63,7 @@
                 <td>
                   <input type="text" v-model="note.note" class="form-control">
                   <ul v-if="errors.length" class="text-danger">
-                        <li v-for="error in errors">@{{ error }}</li>
+                        <li v-for="error in errors">{{ error }}</li>
                   </ul>
                 </td>
                 <td><a href="#" @click="update()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></td>
