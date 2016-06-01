@@ -47,24 +47,7 @@ var vm = new Vue({
             note: '',
             category_id: ''
         },
-        notes: [
-            {
-                note: 'Laravel 5.1 es LTS',
-                category_id: 1
-            },
-            {
-                note: 'v-for es la directiva que utilizamos para iterar una lista',
-                category_id: 2
-            },
-            {
-                note: '@click se utiliza como un alias de v-on:click',
-                category_id: 2
-            },
-            {
-                note: 'Regístrate hoy en styde.net y obtén acceso a todos nuestros cursos',
-                category_id: 3
-            }
-        ],
+        notes: [],
         categories: [
             {
                 id: 1,
@@ -79,6 +62,11 @@ var vm = new Vue({
                 name: 'Publicidad'
             }
         ]
+    },
+    ready: function () {
+        $.getJSON('/api/v1/notes', [], function (notes) {
+            vm.notes = notes;
+        });
     },
     methods: {
         createNote: function () {
