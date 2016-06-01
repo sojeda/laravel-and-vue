@@ -19,7 +19,8 @@ Vue.component('note-row', {
     props: ['note', 'categories'],
     data: function() {
         return {
-            editing: false
+            editing: false,
+            errors: []
         };
     },
     methods: {
@@ -30,7 +31,23 @@ Vue.component('note-row', {
             this.editing = true;
         },
         update: function() {
-            this.editing = false;
+            this.errors = [];
+            var vm = this;
+           
+            $.ajax({
+                url: '/api/v1/notes/' + vm.note.id,
+                type: 'PUT',
+                dataType: 'json',
+                data: vm.note,
+            }).done(function(data) {
+                console.log("success");
+                vm.$parent.notes.$set(this.$parent.notes.indexOf(vm.note),data.note);
+            }).fail(function(jqXHR) {
+                console.log("error");
+                vm.errors = jqXHR.responseJSON.errors;
+            });
+
+             this.editing = false;
         }
     }
 });
