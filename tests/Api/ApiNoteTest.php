@@ -65,4 +65,65 @@ class ApiNoteTest extends TestCase
             ],
             ]);
     }
-} 
+
+    public function test_can_update_a_note()
+    {
+    	$text = 'Update a note';
+        $category = factory(Category::class)->create();
+        $another = factory(Category::class)->create();
+
+        $note = factory(Note::class)->create([
+        	'category_id' => $category->id
+        	]);
+
+        $this->put('api/v1/notes/'.$note->id,[
+            'note' => $text,
+            'category_id' => $another->category_id,
+            ]);
+
+        $this->seeInDatabase('notes',[
+            'note' => $text,
+            'category_id' => $another->category_id,
+            ]);
+
+        $this->seeJsonEquals([
+            'success' => true,
+            'note' => [
+            	'id' => $note->id,
+            	'note' => $text,
+            	'category_id' => $an
+            ],
+            ]);
+    }
+
+    public function test_validation_when_updating_a_note()
+    {
+
+        $category = factory(Category::class)->create();
+        $another = factory(Category::class)->create();
+
+        $note = factory(Category::class)->make();
+
+        $category ->notes()->save($note);
+
+        $this->put ('api/v1/notes/'.$note->id,[
+            'note' => '',
+            'category_id' => '100',
+        ], ['Accept' => 'application/json']);
+
+        $this->dontSeeInDatabase('notes',[
+        	'id' => $note->id,
+            'note' => '',
+            ]);
+
+        $this->seeJsonEquals([
+            'success' => false,
+            'errors' => [
+                'The note field is required.',
+                'The selected category id is invalid.'
+            ],
+            ]);
+    }
+
+
+}
